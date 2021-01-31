@@ -129,6 +129,7 @@ class Energy(FireBall):
         self.rlatitudeRange = []
         self.rlongitudeRange = []
         self.data=[]
+        self.energyList = {}
 
     def latitudeRange(self):
         l=FloatRange(round(decimal.Decimal(self.latitudeLimits()[0]),1), round(decimal.Decimal(self.latitudeLimits()[1]),1), 0.1)
@@ -149,17 +150,14 @@ class Energy(FireBall):
         d.fetchDataToProcess()
         self.data = d.processDataList()
 
-    def highestEnergyList(self):
+    def EnergyList(self):
         for values in self.data:
             if not (values[0] == 200.0 and values[1] == 200.0):
                 if values[0] in self.rlatitudeRange and values[1] in self.rlongitudeRange:
-                        print(values[2])
+                        self.energyList[values[2]]=(values[0], values[1])
 
-
-
-
-
-
+    def highestEnergy(self):
+        return [max(self.energyList.keys()), self.energyList[max(self.energyList.keys())]]
 
 s1=FireBall("37.7937007 N", "122.4039064 W")
 #s1.getResponseFromResource()
@@ -169,8 +167,8 @@ s2.fetchDataToProcess()
 s2.processDataList()
 s2.latitudeLimits()
 s2.longitudeLimits()
-
 s2.latitudeRange()
 s2.longitudeRange()
 s2.fetchdatalist()
-s2.highestEnergyList()
+s2.EnergyList()
+print(s2.highestEnergy())
