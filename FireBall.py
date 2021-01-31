@@ -159,16 +159,37 @@ class Energy(FireBall):
     def highestEnergy(self):
         return [max(self.energyList.keys()), self.energyList[max(self.energyList.keys())]]
 
-s1=FireBall("37.7937007 N", "122.4039064 W")
-#s1.getResponseFromResource()
-#s1.resourceResponseToJson()
-s2=Energy("37.7937007 N", "122.4039064 W")
-s2.fetchDataToProcess()
-s2.processDataList()
-s2.latitudeLimits()
-s2.longitudeLimits()
-s2.latitudeRange()
-s2.longitudeRange()
-s2.fetchdatalist()
-s2.EnergyList()
-print(s2.highestEnergy())
+if __name__ == '__main__':
+    city_Energy = {}
+    while True:
+        city = input("Enter the cityName: ")
+        Latitude = input("Enter the latitude: ")
+        Longitude = input("Enter the longitude: ")
+        def getEnergy(Latitude, Longitude):
+            s2 = Energy(Latitude, Longitude)
+            s2.fetchDataToProcess()
+            s2.processDataList()
+            s2.latitudeLimits()
+            s2.longitudeLimits()
+            s2.latitudeRange()
+            s2.longitudeRange()
+            s2.fetchdatalist()
+            s2.EnergyList()
+            return s2.highestEnergy()
+
+        city_Energy[getEnergy(Latitude, Longitude)[0]]=city
+
+        def compareEnergy():
+            print(city_Energy[max(city_Energy.keys())], max(city_Energy.keys()))
+
+        compareResults=input("print the result: ")
+        if compareResults.casefold() == 'yes'.casefold():
+            compareEnergy()
+        elif compareResults.casefold() == 'exit'.casefold():
+            break
+        else:
+            pass
+
+
+
+
